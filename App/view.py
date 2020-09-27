@@ -64,6 +64,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n>')
 
+
     if int(inputs[0]) == 1:
         print("\nInicializando....")
         # cont es el controlador que se usará de acá en adelante
@@ -71,7 +72,8 @@ while True:
 
     elif int(inputs[0]) == 2:
         print("\nCargando información de crimenes ....")
-
+        controller.loadData(cont,crimefile)
+        print("Se cargo la información de",lt.size(cont["id"]),"accidentes.")
     elif int(inputs[0]) == 3:
         print("\nBuscando crimenes en un rango de fechas: ")
 

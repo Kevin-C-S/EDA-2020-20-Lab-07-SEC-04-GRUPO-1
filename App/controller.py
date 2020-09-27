@@ -39,11 +39,8 @@ recae sobre el controlador.
 
 
 def init():
-    """
-    Llama la funcion de inicializacion del modelo.
-    """
-
-    return None
+    cont = model.newTree()
+    return cont
 
 
 # ___________________________________________________
