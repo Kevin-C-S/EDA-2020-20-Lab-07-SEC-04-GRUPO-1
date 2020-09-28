@@ -38,7 +38,8 @@ operación seleccionada.
 # ___________________________________________________
 
 
-crimefile = 'crime-utf8.csv'
+#accidentsfile = 'US_Accidents_Dec19.csv'
+accidentsfile = 'us_accidents_small.csv'
 
 # ___________________________________________________
 #  Menu principal
@@ -71,7 +72,9 @@ while True:
 
     elif int(inputs[0]) == 2:
         print("\nCargando información de crimenes ....")
-
+        controller.loadData(cont,accidentsfile)
+        print("\nSe cargaron ", controller.accidentsSize(cont), "\n con ", controller.indexHeight(cont))
+        print("Mayor:", controller.maxKey(cont), "menor:", controller.minKey(cont))
     elif int(inputs[0]) == 3:
         print("\nBuscando crimenes en un rango de fechas: ")
 
