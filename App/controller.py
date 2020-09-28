@@ -89,3 +89,7 @@ def minKey(analyzer):
 def maxKey(analyzer):
     
     return model.maxKey(analyzer)
+
+def getAccidentsByDate(analyzer, date):
+    newDate = datetime.datetime.strptime(date, '%Y-%m-%d')
+    return model.getAccidentsByDate(newDate.date(),analyzer)

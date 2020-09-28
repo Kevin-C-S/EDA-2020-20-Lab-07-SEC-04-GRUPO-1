@@ -84,7 +84,7 @@ def updateIndex(type,accident):
 def newAccidentIndex(severity):
     index = {"type":None, "accidents":None}
     index["type"]=severity
-    index["accidents"]=lt.newList("SINGLED_LINKED",compareTypes)
+    index=lt.newList("SINGLED_LINKED",compareTypes)
     return index
     
 
@@ -126,6 +126,9 @@ def maxKey(analyzer):
     
     return om.maxKey(analyzer['dateIndex'])
 
+def getAccidentsByDate(date, analyzer):
+    events = om.get(analyzer["dateIndex"], date)
+    return events
 
 # ==============================
 # Funciones de Comparacion
