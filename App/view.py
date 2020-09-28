@@ -76,8 +76,9 @@ while True:
         print("\nSe cargaron ", controller.accidentsSize(cont), "\n con ", controller.indexHeight(cont))
         print("Mayor:", controller.maxKey(cont), "menor:", controller.minKey(cont))
     elif int(inputs[0]) == 3:
-        print("\nBuscando crimenes en un rango de fechas: ")
-
+        date = input("Escriba una fecha de la forma AAAA-MM-DD: ")
+        print(controller.getAccidentsByDate(cont,date))
+        
 
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
