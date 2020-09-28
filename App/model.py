@@ -37,16 +37,124 @@ es decir contiene los modelos con los datos en memoria
 # -----------------------------------------------------
 # API del TAD Catalogo de accidentes
 # -----------------------------------------------------
+def newAnalyzer():
+    analyzer = {"crashes":None,
+                "dateIndex":None}
+    analyzer["crashes"]=lt.newList("SINGLED_LINKED",compareIds)
+    analyzer["dateIndex"]=om.newMap(omaptype="BST",comparefunction=compareDates)
+    return analyzer
 
 
 # Funciones para agregar informacion al catalogo
+
+def addAccident(analyzer,accident):
+    lt.addLast(analyzer["crashes"],accident)
+    addDate(analyzer["dateIndex"], accident)
+
+def addDate(dateIndex, accident):
+    accident_fullDate = accident["Start_Time"]
+    accident_date = datetime.datetime.strptime(accident_fullDate, '%Y-%m-%d %H:%M:%S')
+    is_There = om.get(dateIndex, accident_date.date())
+    if is_There is not None:
+        type = me.getValue(is_There)
+    else:
+        type = newTypes(accident)
+        om.put(dateIndex,accident_date.date(),type)
+    updateIndex(type, accident)
+    return dateIndex
+
+def updateIndex(type,accident):
+    lst = type["crashes"]
+    lt.addLast(lst, accident)
+    accident_type = type["accident_type"]
+    #print(accident["Severity"])
+    #print(accident_type)
+    is_there_type = m.get(accident_type, accident["Severity"])
+    #print(is_there_type)
+    if is_there_type is None:
+        index = newAccidentIndex(accident["Severity"])
+        lt.addLast(index["accidents"],accident)
+        m.put(accident_type, accident["Severity"], index)
+    else:
+        index = me.getValue(is_there_type)
+        lt.addLast(index["accidents"],accident)
+    #print(type)
+    return type
+
+def newAccidentIndex(severity):
+    index = {"type":None, "accidents":None}
+    index["type"]=severity
+    index["accidents"]=lt.newList("SINGLED_LINKED",compareTypes)
+    return index
+    
+
+def newTypes(accident):
+    type = {"accident_type":None, "crashes":None}
+    type["accident_type"] = m.newMap(numelements=10,
+                                     maptype="PROBING",
+                                     comparefunction=compareTypes)
+    type["crashes"]=lt.newList("SINGLED_LINKED",compareIds)
+    return type
+    
+
 
 
 # ==============================
 # Funciones de consulta
 # ==============================
+def accidentsSize(analyzer):
+    
+    return lt.size(analyzer['crashes'])
+
+
+def indexHeight(analyzer):
+   
+    return om.height(analyzer['dateIndex'])
+
+
+def indexSize(analyzer):
+    
+    return om.size(analyzer['dateIndex'])
+
+
+def minKey(analyzer):
+    
+    return om.minKey(analyzer['dateIndex'])
+
+
+def maxKey(analyzer):
+    
+    return om.maxKey(analyzer['dateIndex'])
 
 
 # ==============================
 # Funciones de Comparacion
 # ==============================
+def compareIds(id1,id2):
+    if (id1 == id2):
+        return 0
+    elif id1 > id2:
+        return 1
+    else:
+        return -1
+
+def compareDates(date1, date2):
+    """
+    Compara dos ids de libros, id es un identificador
+    y entry una pareja llave-valor
+    """
+    if (date1 == date2):
+        return 0
+    elif (date1 > date2):
+        return 1
+    else:
+        return -1
+
+def compareTypes(type1,type2):
+    type = me.getKey(type2)
+    if (type1 == type):
+        return 0
+    elif type1 > type:
+        return 1
+    else:
+        return -1
