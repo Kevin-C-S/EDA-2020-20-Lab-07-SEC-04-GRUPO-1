@@ -127,8 +127,34 @@ def maxKey(analyzer):
     return om.maxKey(analyzer['dateIndex'])
 
 def getAccidentsByDate(date, analyzer):
-    events = om.get(analyzer["dateIndex"], date)
-    return events
+    try:
+        cant1 = 0
+        cant2 = 0
+        cant3 = 0
+        cant4 = 0
+        events = om.get(analyzer["dateIndex"], date)
+        accidents_date = me.getValue(events)
+        total = lt.size(accidents_date["crashes"])
+        sev1 = m.get(accidents_date["accident_type"],"1")
+        if sev1 != None:
+            v1 = me.getValue(sev1)
+            cant1 = lt.size(v1["accidents"])
+        sev2 = m.get(accidents_date["accident_type"],"2")
+        if sev2 != None:
+            v2 = me.getValue(sev2)
+            cant2 = lt.size(v2["accidents"])
+        sev3 = m.get(accidents_date["accident_type"],"3")
+        if sev3 != None:
+            v3 = me.getValue(sev3)
+            cant3 = lt.size(v3["accidents"])
+        sev4 = m.get(accidents_date["accident_type"],"4")
+        if sev4 != None:
+            v4 = me.getValue(sev4)
+            cant4 = lt.size(v4["accidents"])
+        res = (total, cant1, cant2, cant3, cant4)
+    except: 
+        res = None
+    return res 
 
 # ==============================
 # Funciones de Comparacion
