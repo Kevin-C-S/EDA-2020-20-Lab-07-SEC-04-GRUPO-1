@@ -73,13 +73,17 @@ while True:
     elif int(inputs[0]) == 2:
         print("\nCargando información de crimenes ....")
         controller.loadData(cont,accidentsfile)
-        print("\nSe cargaron ", controller.accidentsSize(cont), "\n con ", controller.indexHeight(cont))
-        print("Mayor:", controller.maxKey(cont), "menor:", controller.minKey(cont))
+        print("\nSe cargaron", controller.accidentsSize(cont), "elementos en el árbol\nCon una altura de:", controller.indexHeight(cont))
+        print("Mayor:", controller.maxKey(cont), "Menor:", controller.minKey(cont))
     elif int(inputs[0]) == 3:
-        date = input("Escriba una fecha de la forma AAAA-MM-DD: ")
-        print(controller.getAccidentsByDate(cont,date))
+        in_fe = input("Ingrese la fecha que desea conocer en el formato AAAA-MM-DD: ")
+        print("\nBuscando crimenes en un rango de fechas: ")
+        res = controller.getAccidentsByDate(cont,in_fe)
+        if res != None:
+            print("En la fecha",in_fe,"ocurrieron",res[0],"accidentes.\nSeveridad 1:",res[1],"\nSeveridad 2:",res[2],"\nSeveridad 3:",res[3],"\nSeveridad 4:",res[4])
+        else:
+            print("Esta fecha no se encuentra en el registro")
         
-
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
 
