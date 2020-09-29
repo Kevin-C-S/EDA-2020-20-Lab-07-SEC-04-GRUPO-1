@@ -84,7 +84,7 @@ def updateIndex(type,accident):
 def newAccidentIndex(severity):
     index = {"type":None, "accidents":None}
     index["type"]=severity
-    index=lt.newList("SINGLED_LINKED",compareTypes)
+    index["accidents"]=lt.newList("SINGLED_LINKED",compareTypes)
     return index
     
 
